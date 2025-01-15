@@ -20,7 +20,7 @@ public class Filter implements jakarta.servlet.Filter {
         
         User user = (User) session.getAttribute("user");
         if (user == null) {
-        	res.sendRedirect(req.getContextPath() + "/Login.jsp");
+        	res.sendRedirect("Login");
         } else {
         	chain.doFilter(request, response);
         }

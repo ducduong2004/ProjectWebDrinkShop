@@ -326,4 +326,54 @@ public class ProductDAO {
 		}
 		return totalRevenue;
 	}
+
+	public void updateProductStock(Product product) {
+		String query = "UPDATE Product SET stock = ? WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, product.getStock()); // Update stock
+            stmt.setInt(2, product.getId());    // Product ID
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	public List<Product> getAllUserProducts(int userid) {
+		List<Product> productList = new ArrayList<>();
+	    String sql = "SELECT p.* FROM Product p " +
+	                 "JOIN OrderItems oi ON p.id = oi.productId " +
+	                 "JOIN Orders o ON oi.orderid = o.id " +
+	                 "WHERE o.userid = ?";
+	    
+	    
+	    
+	    try (Connection connection = DBConnectionPool.getDataSource().getConnection()) {
+	        PreparedStatement ps = connection.prepareStatement(sql);
+	        ps.setInt(1, userid);
+	        ResultSet rs = ps.executeQuery();
+	        
+	        OrderDAO orderDAO = new OrderDAO(connection);
+	        
+	        while (rs.next()) {
+	            Product product = new Product();
+	            product.setId(rs.getInt("id"));
+	            product.setName(rs.getString("product_name"));
+	            product.setDescription(rs.getString("description"));
+	            product.setPhoto(rs.getString("images"));
+	            product.setPrice(rs.getDouble("price"));
+	            product.setStock(rs.getInt("stock")); 
+
+	            productList.add(product);
+	        }
+	        
+	    } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+		return productList;
+	}
+
+
+	
 }

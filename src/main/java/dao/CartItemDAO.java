@@ -110,5 +110,29 @@ public class CartItemDAO {
 	        e.printStackTrace();
 	    }
 	}
+	
+	
+	public int getQuantity(int cardId, int productId) {
+		String query = "SELECT * FROM CartItem WHERE CartId = ? AND ProductId = ?";
+		try (Connection connection = DBConnectionPool.getDataSource().getConnection()) {
+	    	
+	    	// lấy quantity ban đầu 
+	    	PreparedStatement stmt = connection.prepareStatement(query);
+	    	stmt.setInt(1, cardId);
+	    	stmt.setInt(2, productId);
+	    	
+	        // Execute the update and check if any rows were affected
+	        ResultSet rs = stmt.executeQuery();
+	        if(rs.next()) {
+	        	return rs.getInt(0);
+	        }
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+		
+		return 0; // chưa có sản phẩm này
+		
+	}
 
 }

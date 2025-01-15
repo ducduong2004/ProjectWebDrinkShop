@@ -13,12 +13,10 @@
 	<!-- Navbar -->
 	<%@ include file="template/includes/navbar.jsp"%>
 
-
-
 	<c:set var="singleProduct" value="${requestScope.product}" />
 	<!-- Product section-->
 	<section class="py-5">
-		<div class="container px-4 px-lg-5 my-5">
+		<div class="container border px-4 px-lg-5 my-5">
 			<div class="row gx-4 gx-lg-5 align-items-center">
 				<div class="col-md-6">
 					<img class="card-img-top mb-5 mb-md-0"
@@ -26,25 +24,12 @@
 						alt="${product.name }" />
 				</div>
 				<div class="col-md-6">
-					<div class="small mb-1">
-						<i>PRODUCT_ID :</i> ${product.id }
-					</div>
 					<h1 class="display-5 fw-bolder">${product.name }</h1>
-					<div class="fs-5 mb-5">
-						<span>$ ${product.price }</span>
+					<div class="mb-5">
+						<span class="fs-3 text"> $${product.price } </span>
 					</div>
 					<p class="lead">${product.description }</p>
-					<form action="addToCart" method="GET">
-						<div class="d-flex">
-							<input class="form-control text-center me-3" name="inputQuantity"
-								type="number" value="1" min="1" style="max-width: 3rem" /> <input
-								name="productId" type="hidden" value="${product.id }" />
-							<button class="btn btn-outline-dark flex-shrink-0" type="submit">
-								<i class="bi-cart-fill me-1"></i> Add to cart
-							</button>
-
-						</div>
-					</form>
+					<a class="btn btn-primary" href="addToCart?productId=${product.id }">Add to cart</a>
 				</div>
 			</div>
 		</div>
@@ -75,21 +60,20 @@
 												<!-- Product reviews-->
 												<div
 													class="d-flex justify-content-center small text-warning mb-2">
-													<div class="bi-star-fill">*</div>
-													<div class="bi-star-fill">*</div>
-													<div class="bi-star-fill">*</div>
-													<div class="bi-star-fill">*</div>
-													<div class="bi-star-fill">*</div>
+													<i class="bi-star-fill"></i>
+													<i class="bi-star-fill"></i>
+													<i class="bi-star-fill"></i>
+													<i class="bi-star-fill"></i>
+													<i class="bi-star-fill"></i>
 												</div>
 												<!-- Product price-->
-												$ ${product.price}
+												$${product.price}
 											</div>
 										</div>
 										<!-- Product actions-->
 										<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 											<div class="text-center">
-												<a class="btn btn-outline-dark mt-auto" href="#">View
-													options</a>
+												<a class="btn btn-primary" href="#">View options</a>
 											</div>
 										</div>
 									</div>
@@ -115,24 +99,24 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script>
-	function loadMore() {
-	    var amount = document.getElementsByClassName("product-count").length; // Get the current number of products
-	    $.ajax({
-	        url: "/zzzz/load",
-	        type: "GET", // Send it through GET method
-	        data: {
-	            exists: amount // Corrected from 'exits' to 'exists'
-	        },
-	        success: function(data) {
-	            var row = document.getElementById("content");
-	            row.innerHTML += data;	
-	        },
-	        error: function(xhr) {
-	            console.error("Error loading more products:", xhr);
-	            // Optionally, you can display an error message to the user
-	        }
-	    });
-	}
-        </script>
+		function loadMore() {
+		    var amount = document.getElementsByClassName("product-count").length; // Get the current number of products
+		    $.ajax({
+		        url: "/zzzz/load",
+		        type: "GET", // Send it through GET method
+		        data: {
+		            exists: amount // Corrected from 'exits' to 'exists'
+		        },
+		        success: function(data) {
+		            var row = document.getElementById("content");
+		            row.innerHTML += data;	
+		        },
+		        error: function(xhr) {
+		            console.error("Error loading more products:", xhr);
+		            // Optionally, you can display an error message to the user
+		        }
+		    });
+		}
+   </script>
 </body>
 </html>

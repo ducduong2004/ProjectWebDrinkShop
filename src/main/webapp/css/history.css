@@ -1,0 +1,50 @@
+.section-content {
+    height: 100%;
+}
+/* Tabs */
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 10px;
+    background-color: #eee;
+    border: none;
+    cursor: pointer;
+}
+
+.tab-btn.active,
+.tab-btn:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    height: 100%;
+
+}
+
+.col-md-12 a {
+    font-size: 24px;
+    margin: 10px;
+
+}
+
+.status {
+    font-size: 12px;
+    background-color: #00b517;
+    color: #fff;
+    padding: 0 10px;
+    width: fit-content;
+    float: right;
+    border-radius: 20px;
+    text-align: center;
+}

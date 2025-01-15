@@ -27,65 +27,62 @@ public class AddToCart extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		int quantity = 1;
-		int id;
+
 		HttpSession session = req.getSession();
-		
+
+		int quantity = 1;
+		int productid;
+
 		User user = (User) session.getAttribute("user");
+
+		//nếu user chưa đăng nhập thì trả về login
 		if(user == null) {
 			res.sendRedirect(req.getContextPath() + "/login");
 			return;
 		}
-		
+		CartItemDAO cartItemDAO = new CartItemDAO();
 		ProductDAO productDAO = new ProductDAO();
+
 		try {
 			Connection connection = DBConnectionPool.getDataSource().getConnection();
 			if(req.getParameter("productId") != null) {
-				id = Integer.parseInt(req.getParameter("productId"));
-				Product product = productDAO.getProductById(id);
+				productid = Integer.parseInt(req.getParameter("productId"));
+				Product product = productDAO.getProductById(productid);
 				if(product != null) {
-					
-					if(req.getParameter("quantity") != null) {
-						quantity = Integer.parseInt(req.getParameter("quantity"));
-					}
 					CartDAO cartDAO = new CartDAO(connection);
-					Cart cart;
-					if(session.getAttribute("cart") == null) {
+					Cart cart = cartDAO.getCartByUserId(user.getId());
+					if(cart == null) {
 						cart = new Cart(1, user.getId());
 						cartDAO.createCart(cart);
 						session.setAttribute("cart", cartDAO.getCartByUserId(user.getId()));
 					}
-						cart = (Cart) session.getAttribute("cart");
-						CartItemDAO cartItemDAO = new CartItemDAO();
-						
-						// Kiểm tra các tham số đầu vào
-				        if (quantity <= 0) {
-				            throw new IllegalArgumentException("Quantity must be greater than 0");
-				        }
-				        
-				        if(cart == null) {
-				        	throw new NullPointerException("cart is Null");
-				        }
-				        
-				        Product item = cart.lookup(product.getId());
-				        if(item == null && quantity > 0) {
-				        	cartItemDAO.addCartItem(cart, product, quantity);
-				        }
-				        
-				        if(item != null && quantity > 0) {
-				        	cartItemDAO.setQuantity(cart, product, quantity);
-				        }
+
+					quantity = cartItemDAO.getQuantity(cart.getCartId(), productid) + 1;
+
+					// Kiểm tra các tham số đầu vào
+					if (quantity <= 0) {
+						throw new IllegalArgumentException("Quantity must be greater than 0");
+					}
+
+					Product item = cart.lookup(product.getId());
+					if(item == null && quantity > 0) {
+						cartItemDAO.addCartItem(cart, product, quantity);
+					}
+
+					if(item != null && quantity > 0) {
+						cartItemDAO.setQuantity(cart, product, quantity);
+					}
 
 				}
 
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
+
 		res.sendRedirect(req.getContextPath() + "/secure/cart");
 	}
 

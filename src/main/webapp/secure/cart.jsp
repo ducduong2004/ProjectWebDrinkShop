@@ -73,6 +73,7 @@
 						</c:choose>
 					</div>
 				</div>
+				
 				<!-- Continue Shopping Button -->
 				<div class="text-start mb-4">
 					<a href="${pageContext.request.contextPath}/Homepage"
@@ -100,8 +101,7 @@
 						<h5 class="card-title mb-4">Order Summary</h5>
 
 						<!--  SUMMARY -->
-						<form action="${pageContext.request.contextPath}/secure/payment"
-							method="POST">
+						<form action="${pageContext.request.contextPath}/secure/payment" method="POST">
 							<div class="d-flex justify-content-between mb-3">
 								<span>Subtotal</span> <span id="subtotal" class="subtotal"><fmt:formatNumber
 										value="${subtotal}" type="currency" /></span>
@@ -112,6 +112,7 @@
 							</div>
 							<hr>
 							<div class="d-flex justify-content-between mb-4">
+							<input name ="total" value ="${total}" type="hidden">
 								<strong>Total</strong> <strong id="total" class="total"><fmt:formatNumber
 										value="${total}" type="currency" /></strong>
 							</div>
@@ -165,7 +166,6 @@
 								const shipping1 = response.shipping;
 								const total1 = response.total;
 								// Gán giá trị cho các phần tử
-
 								document.getElementById('subtotal').innerHTML = "$"
 										+ subtotal1;
 								document.getElementById('shipping').innerHTML = "$"

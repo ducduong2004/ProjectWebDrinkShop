@@ -17,6 +17,7 @@ public class CartDAO {
 
     public Cart getCartByUserId(int userId) {
         String sql = "SELECT * FROM Cart WHERE UserId = ?";
+        
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();

@@ -55,7 +55,7 @@ public class LoadMoreServlet extends HttpServlet {
                     + "        <!-- Product actions-->\r\n"
                     + "        <div class=\"card-footer p-4 pt-0 border-top-0 bg-transparent\">\r\n"
                     + "            <div class=\"text-center\">\r\n"
-                    + "                <a class=\"btn btn-outline-dark mt-auto\" href=\"#\">View options</a>\r\n"
+                    + "                <a class=\"btn btn-primary\" href=\"#\">View options</a>\r\n"
                     + "            </div>\r\n"
                     + "        </div>\r\n"
                     + "    </div>\r\n"

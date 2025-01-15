@@ -40,6 +40,7 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer userId = getUserIdFromSession(request.getSession());
+        
         if (isUserNotLoggedIn(userId)) {
             System.out.println("User not logged in. Redirecting to login page.");
             // Get the context path dynamically

@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<section class="bg-light py-3 py-md-5">
+<section class="bg-light" style="min-height: 600px; margin: 100px">
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">

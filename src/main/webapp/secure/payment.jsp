@@ -26,7 +26,7 @@
 								</div>
 								<div>
 									<p class="d-flex flex-column mb-0">
-										<b>${sessionScope.user.username  }</b><span
+										<b>${sessionScope.user.username}</b><span
 											class="small text-muted"> **** 8880 </span>
 									</p>
 								</div>
@@ -54,7 +54,7 @@
 								class="d-flex justify-content-between align-items-center pb-1">
 								<a href="<%=request.getHeader("Referer")%>" class="text-muted">Go
 									back</a>
-								<form action="${pageContext.request.contextPath}/template/static/Success.jsp" method="post">
+								<form action="${pageContext.request.contextPath}/Success" method="post">
 									<button type="submit" class="btn btn-primary btn-lg">Pay
 										amount</button>
 								</form>
