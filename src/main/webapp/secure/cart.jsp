@@ -42,11 +42,12 @@
 													<button class="btn btn-outline-secondary btn-sm"
 														type="button" onclick="changeQuantity(-1, this)">-</button>
 													<input style="max-width: 100px" type="number"
-														class="form-control  form-control-sm text-center quantity-input"
-														onchange="updateQuantity('<c:out value="${fn:escapeXml(cartItem.product.id)}"/>', this)"
+														class="form-control form-control-sm text-center quantity-input"
+														onchange=""
+														onkeyup="validateQuantity(this)"
 														value="${cartItem.quantity}" min="1" />
 													<button class="btn btn-outline-secondary btn-sm"
-														type="button">+</button>
+														type="button" onclick="changeQuantity(1, this)">+</button>
 												</div>
 											</div>
 											<div class="col-md-2 text-end">
@@ -73,7 +74,7 @@
 						</c:choose>
 					</div>
 				</div>
-				
+
 				<!-- Continue Shopping Button -->
 				<div class="text-start mb-4">
 					<a href="${pageContext.request.contextPath}/Homepage"
@@ -101,7 +102,9 @@
 						<h5 class="card-title mb-4">Order Summary</h5>
 
 						<!--  SUMMARY -->
-						<form action="${pageContext.request.contextPath}/secure/payment" method="POST">
+						<form action="${pageContext.request.contextPath}/secure/payment"
+							method="POST">
+							<input name = "quantityHidden" value ="" type="hidden"/>
 							<div class="d-flex justify-content-between mb-3">
 								<span>Subtotal</span> <span id="subtotal" class="subtotal"><fmt:formatNumber
 										value="${subtotal}" type="currency" /></span>
@@ -112,8 +115,8 @@
 							</div>
 							<hr>
 							<div class="d-flex justify-content-between mb-4">
-							<input name ="total" value ="${total}" type="hidden">
-								<strong>Total</strong> <strong id="total" class="total"><fmt:formatNumber
+								<input name="total" value="${total}" type="hidden"> <strong>Total</strong>
+								<strong id="total" class="total"><fmt:formatNumber
 										value="${total}" type="currency" /></strong>
 							</div>
 
@@ -149,6 +152,74 @@
 
 	<%@ include file="/template/includes/footer.jsp"%>
 	<script>
+		function changeQuantity(change, buttonElement) {
+			// Lấy thẻ chứa input số lượng
+			const quantityInput = buttonElement.parentElement
+					.querySelector('.quantity-input');
+			let currentQuantity = parseInt(quantityInput.value);
+
+			// Tính toán số lượng mới
+			let newQuantity = currentQuantity + change;
+
+			// Đảm bảo số lượng không nhỏ hơn 1
+			if (newQuantity < 1) {
+				alert('Quantity cannot be less than 1.');
+				return;
+			}
+
+			// Cập nhật số lượng hiển thị
+			quantityInput.value = newQuantity;
+
+			// Lấy ID sản phẩm từ thẻ input
+			const productId = quantityInput.getAttribute('onchange').match(
+					/updateQuantity\('(.+?)'/)[1];
+
+			// Gửi yêu cầu AJAX đến server để cập nhật số lượng
+			$
+					.ajax({
+						url : '/zzzz/updateQuantity',
+						type : 'POST',
+						data : {
+							id : productId,
+							quantity : newQuantity
+						},
+						success : function(response) {
+							if (response.success) {
+								// Cập nhật lại Summary
+								document.getElementById('subtotal').innerHTML = "$"
+										+ response.subtotal;
+								document.getElementById('shipping').innerHTML = "$"
+										+ response.shipping;
+								document.getElementById('total').innerHTML = "$"
+										+ response.total;
+
+								// Cập nhật trạng thái nút Checkout
+								const checkoutButton = document
+										.getElementById('checkoutButton');
+								if (response.subtotal <= 0) {
+									checkoutButton.classList
+											.remove('btn-primary');
+									checkoutButton.classList.add('btn-warning');
+									checkoutButton.setAttribute('disabled',
+											'disabled');
+									checkoutButton.textContent = 'Proceed to Checkout';
+								} else {
+									checkoutButton.classList
+											.remove('btn-warning');
+									checkoutButton.classList.add('btn-primary');
+									checkoutButton.removeAttribute('disabled');
+									checkoutButton.textContent = 'Proceed to Checkout';
+								}
+							} else {
+								alert('Có lỗi xảy ra: ' + response.message);
+							}
+						},
+						error : function() {
+							alert('Có lỗi xảy ra khi gửi yêu cầu.');
+						}
+					});
+		}
+
 		function removeItem(productId, rowElement) {
 			$
 					.ajax({
@@ -199,6 +270,18 @@
 						}
 					});
 		}
+		
+		
+		function validateQuantity(inputElement) {
+		    let value = parseInt(inputElement.value);
+		    // Nếu giá trị không hợp lệ hoặc nhỏ hơn 1, đặt lại giá trị mặc định là 1
+		    if (isNaN(value) || value < 1) {
+		        inputElement.value = 1;
+		    }
+		}
+		
+		
+
 	</script>
 
 </body>

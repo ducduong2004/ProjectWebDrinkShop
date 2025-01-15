@@ -20,12 +20,11 @@ public class Filter implements jakarta.servlet.Filter {
         
         User user = (User) session.getAttribute("user");
         if (user == null) {
-        	res.sendRedirect("Login");
+        	res.sendRedirect(req.getContextPath() + "/login");
         } else {
         	chain.doFilter(request, response);
         }
-        
-        
-
     }
+    
+    
 }

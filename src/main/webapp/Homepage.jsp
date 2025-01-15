@@ -1,3 +1,10 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<fmt:requestEncoding value="UTF-8" />
+<fmt:setLocale value="${param.lang}" />
+<fmt:setBundle basename="messages" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +27,7 @@
 
 	<!-- Main Content Area -->
 	<div class="container">
-		<h1>${requestScope.welcome}</h1>
+		<%= bundle.getString("welcome") %>
 		<jsp:include page="template/static/home.jsp">
 			<jsp:param name="contentPage" value="template/static/home.jsp" />
 		</jsp:include>

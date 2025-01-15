@@ -48,6 +48,22 @@ public class Cart {
         }
         item.setQuantity(quantity);
     }
+    
+    // Update the quantity of an item in the cart
+    public synchronized void updateQuantityCart(int productId, int quantity) {
+        if (items.containsKey(productId)) {
+            if (quantity > 0) {
+                CartItem cartItem = items.get(productId);
+                cartItem.setQuantity(quantity);
+            } else {
+                items.remove(productId);
+            }
+        } else {
+            // Sản phẩm không tồn tại trong giỏ hàng
+            throw new IllegalArgumentException("Product ID " + productId + " not found in the cart.");
+        }
+    }
+
 
     // Remove an item from the cart
     public synchronized void removeItem(int productId) {

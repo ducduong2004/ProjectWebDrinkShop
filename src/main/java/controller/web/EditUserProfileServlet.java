@@ -23,6 +23,7 @@ public class EditUserProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// Lấy user_id từ tham số URL
         String userIdStr = request.getParameter("user_id");
 		

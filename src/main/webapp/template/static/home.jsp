@@ -1,10 +1,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<fmt:requestEncoding value="UTF-8" />
+<fmt:setLocale value="${param.lang}" />
+<fmt:setBundle basename="messages" />
+
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
 <!-- Header-->
 <header class="bg-dark py-5 px-5">
 	<div class="container-fluid">
 		<div class="text-center text-white">
+		<h1><p> <fmt:message key="welcome"/> </p> </h1>
 			<h1 class="display-4 fw-bolder">Boba Station</h1>
 			<p class="lead fw-normal text-white-50 mb-0">I never laugh until
 				I have Drink</p>

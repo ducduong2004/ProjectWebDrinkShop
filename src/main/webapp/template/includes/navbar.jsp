@@ -1,4 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.ResourceBundle, java.util.Locale"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%
+Locale locale = (Locale) session.getAttribute("locale");
+if (locale == null) {
+	locale = Locale.forLanguageTag("vi");
+	session.setAttribute("locale", locale);
+}
+
+ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
+%>
+
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
 	<div class="container-fluid px-4 px-lg-5">
@@ -10,6 +24,10 @@
 			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
+		<a class="btn" href="changeLanguage?lang=vi"
+			style="text-align: none">Tiếng Việt</a>
+		<a class="btn" href="changeLanguage?lang=en"
+			style="text-align: none">English</a>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
 				<li class="nav-item"><a class="nav-link active"
@@ -31,7 +49,8 @@
 			<c:set var="userImg" value="${sessionScope.img}" />
 			<c:choose>
 				<c:when test="${userId != null}">
-					<a href="${pageContext.request.contextPath}/secure/cart?userId=${sessionScope.user.getId()}"
+					<a
+						href="${pageContext.request.contextPath}/secure/cart?userId=${sessionScope.user.getId()}"
 						class="d-flex px-4" style="text-decoration: none;">
 						<button class="btn btn-outline-dark" type="button">
 							<i class="bi-cart-fill me-1"></i> Cart <span
@@ -45,8 +64,8 @@
 							aria-expanded="false">
 							<img style="height: 40px; width: 40px; padding: 0;"
 								class="rounded-circle me-2"
-								src="${pageContext.request.contextPath}/${user.getImg()}" alt="avatar">
-							<span>Profile</span>
+								src="${pageContext.request.contextPath}/${user.getImg()}"
+								alt="avatar"> <span>Profile</span>
 						</button>
 						<ul class="dropdown-menu">
 							<li class="text-center border-bottom"><a
@@ -72,10 +91,10 @@
 					<div class="widget-header ">
 						<div>
 							<a class="btn bg-primary text-light"
-								href="${pageContext.request.contextPath}/Login.jsp"> Login </a> 
-								<a
-								class="btn bg-primary text-light"
-								href="${pageContext.request.contextPath}/Register.jsp"> Register </a>
+								href="${pageContext.request.contextPath}/Login.jsp"> Login </a>
+							<a class="btn bg-primary text-light"
+								href="${pageContext.request.contextPath}/Register.jsp">
+								Register </a>
 						</div>
 					</div>
 				</c:otherwise>
