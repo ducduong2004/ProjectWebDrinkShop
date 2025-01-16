@@ -21,6 +21,7 @@ import models.User;
 /**
  * Servlet implementation class AddToCart
  */
+// xu li them vao gio hang
 @WebServlet("/addToCart")
 public class AddToCart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -35,11 +36,6 @@ public class AddToCart extends HttpServlet {
 
 		User user = (User) session.getAttribute("user");
 
-		//nếu user chưa đăng nhập thì trả về login
-		if(user == null) {
-			res.sendRedirect(req.getContextPath() + "/login");
-			return;
-		}
 		CartItemDAO cartItemDAO = new CartItemDAO();
 		ProductDAO productDAO = new ProductDAO();
 

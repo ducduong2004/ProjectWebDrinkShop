@@ -265,4 +265,46 @@ public class UserDAO {
         return false;
     }
     
+
+	public boolean insertUser(User user) {
+		String sql = "INSERT INTO users (username, email, phone, address) VALUES (?, ?, ?, ?)";
+		try (Connection connection = DBConnectionPool.getDataSource().getConnection();
+				PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+			// Thiết lập tham số cho PreparedStatement
+			stmt.setString(1, user.getUsername());
+			stmt.setString(2, user.getEmail());
+			stmt.setString(3, user.getPhone());
+			stmt.setString(4, user.getAddress());
+
+			// Thực thi câu lệnh INSERT
+			int rowsAffected = stmt.executeUpdate();
+
+			// Trả về true nếu câu lệnh INSERT thành công
+			return rowsAffected > 0;
+
+		} catch (SQLException e) {
+			// Xử lý lỗi nếu có
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public int getTotalUsers() {
+		String query = "SELECT COUNT(*) FROM users";
+		try (Connection connection = DBConnectionPool.getDataSource().getConnection();
+				Statement stmt = connection.createStatement();
+				ResultSet rs = stmt.executeQuery(query)) {
+
+			// Kiểm tra nếu có dữ liệu trả về từ câu truy vấn
+			if (rs.next()) {
+				return rs.getInt(1); // Lấy số lượng người dùng (COUNT)
+			}
+		} catch (SQLException e) {
+			e.printStackTrace(); // In lỗi nếu có vấn đề
+		}
+		return 0; // Trả về 0 nếu có lỗi hoặc không tìm thấy dữ liệu
+	}
+
+    
 }

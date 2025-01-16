@@ -43,7 +43,7 @@
 														type="button" onclick="changeQuantity(-1, this)">-</button>
 													<input style="max-width: 100px" type="number"
 														class="form-control form-control-sm text-center quantity-input"
-														onchange=""
+														onchange="updateQuantity('<c:out value="${fn:escapeXml(cartItem.product.id)}"/>', this)"
 														onkeyup="validateQuantity(this)"
 														value="${cartItem.quantity}" min="1" />
 													<button class="btn btn-outline-secondary btn-sm"
@@ -123,12 +123,10 @@
 							<!-- SUMMARY -->
 							<c:choose>
 								<c:when test="${subtotal <= 0}">
-									<button id="checkoutButton" class="btn btn-warning w-100"
-										disabled>Proceed to Checkout</button>
+									<button id="checkoutButton" class="btn btn-warning w-100" disabled>Proceed to Checkout</button>
 								</c:when>
 								<c:otherwise>
-									<button id="checkoutButton" class="btn btn-primary w-100">
-										Proceed to Checkout</button>
+									<button id="checkoutButton" class="btn btn-primary w-100">Proceed to Checkout</button>
 								</c:otherwise>
 							</c:choose>
 						</form>

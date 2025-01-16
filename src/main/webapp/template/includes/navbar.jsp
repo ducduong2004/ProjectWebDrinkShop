@@ -17,7 +17,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
 	<div class="container-fluid px-4 px-lg-5">
 		<a class="navbar-brand"
-			href="${pageContext.request.contextPath}/Homepage">Boba Station</a>
+			href="${pageContext.request.contextPath}/Homepage"> <%=bundle.getString("Webname") %></a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -31,11 +31,11 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
 				<li class="nav-item"><a class="nav-link active"
-					aria-current="page" href="#!">Home</a></li>
-				<li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+					aria-current="page" href="/Homepage"><%=bundle.getString("Home") %></a></li>
+				<li class="nav-item"><a class="nav-link" href="#!"><%=bundle.getString("About") %></a></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-					role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+					role="button" data-bs-toggle="dropdown" aria-expanded="false"><%=bundle.getString("Shop") %></a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<li><a class="dropdown-item" href="#!"
 							href="${pageContext.request.contextPath}/category?id=all">All
@@ -57,7 +57,6 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 								class="badge bg-dark text-white ms-1 rounded-pill"></span>
 						</button>
 					</a>
-
 					<div class="dropdown">
 						<button class="btn dropdown-toggle d-flex align-items-center"
 							type="button" id="userDropdown" data-bs-toggle="dropdown"
@@ -91,17 +90,14 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 					<div class="widget-header ">
 						<div>
 							<a class="btn bg-primary text-light"
-								href="${pageContext.request.contextPath}/Login.jsp"> Login </a>
+								href="${pageContext.request.contextPath}/Login.jsp"> <%=bundle.getString("Login") %> </a>
 							<a class="btn bg-primary text-light"
 								href="${pageContext.request.contextPath}/Register.jsp">
-								Register </a>
+								<%=bundle.getString("Register") %> </a>
 						</div>
 					</div>
 				</c:otherwise>
 			</c:choose>
-
-
-
 		</div>
 	</div>
 </nav>

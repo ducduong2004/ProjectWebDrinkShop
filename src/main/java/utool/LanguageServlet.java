@@ -23,21 +23,20 @@ public class LanguageServlet extends HttpServlet {
 		if (lang == null || lang.isEmpty()) {
 			lang = "vi"; 
 		}
-		System.out.println(lang);
 
 		Locale locale;
 		if ("en".equals(lang)) {
-			System.out.println(lang + "++");
 			locale = Locale.forLanguageTag("en"); // Locale cho tiếng Anh
 		} else {
 			locale = Locale.forLanguageTag("vi"); // Locale cho tiếng Việt mặc định
 		}
 		
-
+		
 		// Lưu Locale vào session
 		HttpSession session = request.getSession();
 		session.setAttribute("locale", locale);
 
+		
 		// Tạo ResourceBundle với Locale vừa thiết lập
 		ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 		session.setAttribute("bundle", bundle); // Lưu ResourceBundle vào session

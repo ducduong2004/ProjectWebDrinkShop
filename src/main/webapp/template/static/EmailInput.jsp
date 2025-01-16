@@ -9,7 +9,6 @@
 						<div class="text-center mb-3">
 							 <img src="image/website/logo.png" alt="Logo" width="100" height="100">
 						</div>
-						<p> ${sessionScope.authCode } </p>
 						<c:choose>
 							<c:when test="${empty sessionScope.authCode }">
 								<h2 class="fs-6 fw-normal text-center text-secondary mb-4">enter

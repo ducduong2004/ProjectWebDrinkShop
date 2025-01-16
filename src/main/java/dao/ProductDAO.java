@@ -22,21 +22,16 @@ public class ProductDAO {
 	public ProductDAO() {
 
 	}
-
-	// Thêm sản phẩm
-	public void addProduct(Product product) {
-		String sql = "INSERT INTO Product (name, description, photo, price, discount, category_id) VALUES (?, ?, ?, ?, ?, ?)";
-		try (Connection connection = DBConnectionPool.getDataSource().getConnection()) {
-			PreparedStatement statement = connection.prepareStatement(sql);
+	
+	public void addProduct(Product product) throws SQLException {
+		String query = "INSERT INTO products (name, description, photo, price) VALUES (?, ?, ?, ?)";
+		try (PreparedStatement statement = connection.prepareStatement(query)) {
 			statement.setString(1, product.getName());
 			statement.setString(2, product.getDescription());
 			statement.setString(3, product.getPhoto());
 			statement.setDouble(4, product.getPrice());
-			statement.setInt(6, product.getCategory().getId());
-			statement.executeUpdate();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+			statement.executeUpdate();
 		}
 	}
 
@@ -164,7 +159,6 @@ public class ProductDAO {
 				category.setId(resultSet.getInt("id"));
 				category.setTitle(resultSet.getString("category_name"));
 				category.setDescription(resultSet.getString("description"));
-				// Set other Category fields if necessary
 			}
 
 		} catch (SQLException e) {
